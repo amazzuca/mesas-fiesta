@@ -2,122 +2,79 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ubicación de mesas</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Lista de Mesas</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --gold: #C9A84C; --gold-dark: #8B6914;
-    --cream: #FDF8EF; --dark: #1C150A; --mid: #6B5830;
-    --surface: #FFF9F0; --border: rgba(201,168,76,0.25);
-  }
-  body { background: var(--cream); min-height: 100vh; font-family: 'Jost', sans-serif; padding: 3rem 1rem 4rem; }
-  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 70% 40% at 15% 5%, rgba(201,168,76,0.10) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 85% 95%, rgba(201,168,76,0.08) 0%, transparent 60%); pointer-events: none; }
-  .container { max-width: 640px; margin: 0 auto; }
-  header { text-align: center; margin-bottom: 2.5rem; animation: fadeDown 0.7s ease both; }
-  .ornament { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 0.4rem; }
-  h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 7vw, 3.6rem); font-weight: 400; color: var(--dark); line-height: 1.1; }
-  h1 em { font-style: italic; color: var(--gold-dark); }
-  .subtitle { margin-top: 0.5rem; color: var(--mid); font-size: 0.85rem; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; }
-  .divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0 2rem; }
-  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold)); }
-  .divider::after { background: linear-gradient(to left, transparent, var(--gold)); }
-  .divider span { color: var(--gold); font-size: 1.1rem; }
-  .search-wrap { position: relative; margin-bottom: 1.5rem; animation: fadeUp 0.7s ease 0.2s both; }
-  .search-wrap input { width: 100%; padding: 0.75rem 1rem 0.75rem 2.8rem; border: 1.5px solid var(--border); border-radius: 50px; background: var(--surface); font-family: 'Jost', sans-serif; font-size: 0.95rem; color: var(--dark); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-  .search-wrap input::placeholder { color: #BBA870; }
-  .search-wrap input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
-  .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 1rem; pointer-events: none; }
-  .table-wrap { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; animation: fadeUp 0.8s ease 0.3s both; }
-  table { width: 100%; border-collapse: collapse; }
-  thead tr { background: var(--gold); }
-  thead th { padding: 0.85rem 1.2rem; text-align: left; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; }
-  thead th:last-child { text-align: center; }
-  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:nth-child(even) { background: rgba(201,168,76,0.04); }
-  tbody tr:hover { background: rgba(201,168,76,0.09); }
-  td { padding: 0.8rem 1.2rem; color: var(--dark); font-size: 0.95rem; }
-  td:first-child { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; }
-  td:last-child { text-align: center; }
-  .badge { display: inline-block; background: var(--gold); color: #fff; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; width: 2.2rem; height: 2.2rem; line-height: 2.2rem; border-radius: 50%; text-align: center; }
-  .no-results { text-align: center; padding: 2rem; color: var(--mid); font-style: italic; font-size: 0.95rem; }
-  footer { text-align: center; margin-top: 2.5rem; font-size: 0.72rem; color: #CDB97A; letter-spacing: 0.12em; text-transform: uppercase; animation: fadeUp 0.9s ease 0.5s both; }
-  @keyframes fadeDown { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  body { font-family: Arial, sans-serif; }
+  table { border-collapse: collapse; width: 50%; margin: 20px auto; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  th { background-color: #f2f2f2; }
 </style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <p class="ornament">✦ Boda de Lucía & Mateo ✦</p>
-    <h1>Ubicación de <em>mesas</em></h1>
-    <p class="subtitle">Sábado 12 de octubre, 2025</p>
-  </header>
-  <div class="divider"><span>✦</span></div>
-  <div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="search" placeholder="Filtrar por nombre…" autocomplete="off">
-  </div>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Nombre</th><th>Mesa</th></tr></thead>
-      <tbody id="tbody"></tbody>
-    </table>
-  </div>
-  <footer>— ¡Que disfrutes la noche! —</footer>
-</div>
-<script>
-/* ═══════════════════════════════════════════
-   LISTA DE INVITADOS — editá acá
-   Formato: ["Nombre Apellido", numeroDeMesa]
-═══════════════════════════════════════════ */
-const invitados = [
-  ["Ana García",          1],
-  ["Carlos García",       1],
-  ["Sofía Martínez",      1],
-  ["Luis Martínez",       1],
-  ["Valentina López",     2],
-  ["Martín López",        2],
-  ["Camila Rodríguez",    2],
-  ["Pablo Rodríguez",     2],
-  ["Lucía Fernández",     3],
-  ["Diego Fernández",     3],
-  ["Florencia Gómez",     3],
-  ["Nicolás Gómez",       3],
-  ["Julieta Sánchez",     4],
-  ["Agustín Sánchez",     4],
-  ["Daniela Torres",      4],
-  ["Sebastián Torres",    4],
-  ["Romina Díaz",         5],
-  ["Facundo Díaz",        5],
-  ["Milagros Ruiz",       5],
-  ["Tomás Ruiz",          5],
-];
 
-invitados.sort((a, b) => a[0].localeCompare(b[0], 'es'));
+<h2 style="text-align:center;">Lista de Invitados por Mesa</h2>
 
-function normalize(s) {
-  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
-function render(list) {
-  const tbody = document.getElementById('tbody');
-  if (!list.length) {
-    tbody.innerHTML = '<tr><td colspan="2" class="no-results">No se encontraron resultados</td></tr>';
-    return;
-  }
-  tbody.innerHTML = list.map(([n, m]) =>
-    `<tr><td>${n}</td><td><span class="badge">${m}</span></td></tr>`
-  ).join('');
-}
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Mesa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Agus</td><td>5</td></tr>
+    <tr><td>Agus M.</td><td>3</td></tr>
+    <tr><td>Ale</td><td>1</td></tr>
+    <tr><td>Auro</td><td>5</td></tr>
+    <tr><td>Belaus</td><td>1</td></tr>
+    <tr><td>Carlos</td><td>2</td></tr>
+    <tr><td>Carlitos</td><td>2</td></tr>
+    <tr><td>Caro</td><td>2</td></tr>
+    <tr><td>Cata</td><td>5</td></tr>
+    <tr><td>Cesar</td><td>1</td></tr>
+    <tr><td>Clau</td><td>2</td></tr>
+    <tr><td>Delfi</td><td>1</td></tr>
+    <tr><td>Delfi D</td><td>3</td></tr>
+    <tr><td>Diego</td><td>2</td></tr>
+    <tr><td>Dimas</td><td>4</td></tr>
+    <tr><td>Elian</td><td>4</td></tr>
+    <tr><td>Enrique</td><td>1</td></tr>
+    <tr><td>Esme</td><td>5</td></tr>
+    <tr><td>Franco</td><td>3</td></tr>
+    <tr><td>Gigi</td><td>2</td></tr>
+    <tr><td>Javi</td><td>2</td></tr>
+    <tr><td>Jaz</td><td>5</td></tr>
+    <tr><td>Jim</td><td>4</td></tr>
+    <tr><td>Juani</td><td>4</td></tr>
+    <tr><td>Juli</td><td>5</td></tr>
+    <tr><td>Lauti D</td><td>3</td></tr>
+    <tr><td>Lola V</td><td>5</td></tr>
+    <tr><td>Lore</td><td>2</td></tr>
+    <tr><td>Luca</td><td>4</td></tr>
+    <tr><td>Lucas G</td><td>3</td></tr>
+    <tr><td>Maite</td><td>5</td></tr>
+    <tr><td>Martin</td><td>4</td></tr>
+    <tr><td>Martu</td><td>5</td></tr>
+    <tr><td>Mati</td><td>5</td></tr>
+    <tr><td>Mati S</td><td>3</td></tr>
+    <tr><td>Mia G</td><td>3</td></tr>
+    <tr><td>Mili</td><td>2</td></tr>
+    <tr><td>Mora B</td><td>3</td></tr>
+    <tr><td>Nacho</td><td>4</td></tr>
+    <tr><td>Ole</td><td>1</td></tr>
+    <tr><td>Olenka</td><td>1</td></tr>
+    <tr><td>Onel</td><td>4</td></tr>
+    <tr><td>Pagani</td><td>4</td></tr>
+    <tr><td>Pili</td><td>5</td></tr>
+    <tr><td>Rocio</td><td>1</td></tr>
+    <tr><td>Sebas</td><td>2</td></tr>
+    <tr><td>Shushu</td><td>1</td></tr>
+    <tr><td>Toto</td><td>4</td></tr>
+    <tr><td>Tuchi</td><td>1</td></tr>
+    <tr><td>Valen</td><td>4</td></tr>
+    <tr><td>Vera B</td><td>3</td></tr>
+  </tbody>
+</table>
 
-render(invitados);
-
-document.getElementById('search').addEventListener('input', function() {
-  const q = normalize(this.value.trim());
-  render(q ? invitados.filter(([n]) => normalize(n).includes(q)) : invitados);
-});
-</script>
 </body>
 </html>
